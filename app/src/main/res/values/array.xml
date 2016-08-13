@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="xuanxiang">
+        <item>文件1</item>
+        <item>文件2</item>
+        <item>文件3</item>
+        <item>文件4</item>
+    </string-array>
+</resources>

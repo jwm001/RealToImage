@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.family.jww.realtoimage.MainActivity">
+
+    <Spinner
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/spinner"
+        app:layout_constraintTop_toTopOf="@+id/activity_main"
+        tools:ignore="MissingConstraints"
+        android:entries="@array/xuanxiang"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintRight_toRightOf="@+id/activity_main" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:ems="10"
+        android:id="@+id/editTextWord"
+        android:hint="请输入想要词汇"
+        android:textAlignment="center"
+        app:layout_constraintTop_toBottomOf="@+id/spinner"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintRight_toRightOf="@+id/activity_main"
+        android:layout_marginStart="16dp"
+        app:layout_constraintLeft_toLeftOf="@+id/activity_main"
+        app:layout_constraintBottom_toBottomOf="@+id/activity_main"
+        app:layout_constraintVertical_bias="0.25"
+        tools:ignore="HardcodedText,InvalidId" />
+
+    <Button
+        android:text="保存"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/buttonSave"
+        tools:ignore="HardcodedText,MissingConstraints"
+        app:layout_constraintTop_toBottomOf="@+id/spinner"
+        app:layout_constraintBottom_toBottomOf="@+id/activity_main"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintRight_toRightOf="@+id/activity_main"
+        android:layout_marginStart="16dp"
+        app:layout_constraintLeft_toLeftOf="@+id/activity_main" />
+
+    <Button
+        android:text="训练"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/buttonPractise"
+        app:layout_constraintBottom_toBottomOf="@+id/activity_main"
+        android:layout_marginStart="16dp"
+        app:layout_constraintLeft_toLeftOf="@+id/activity_main"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintRight_toRightOf="@+id/activity_main"
+        app:layout_constraintTop_toTopOf="@+id/spinner"
+        app:layout_constraintVertical_bias="0.82"
+        tools:ignore="HardcodedText" />
+</android.support.constraint.ConstraintLayout>
