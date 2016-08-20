@@ -4,12 +4,15 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.io.ByteArrayOutputStream;
 import java.io.FileInputStream;
@@ -21,18 +24,30 @@ import java.util.List;
 import static android.R.id.list;
 
 public class PractiseActivity extends AppCompatActivity implements SensorEventListener {
-    private TextView textView1;
-    private TextView textView2;
-    private TextView textView3;
-    private TextView textView4;
-    private TextView textView5;
-    private TextView textView6;
-    private TextView textView7;
-    private TextView textView8;
-    private TextView textView9;
-    private TextView textView10;
+    private TextView[] textView;
     private SensorManager mSensorManager;
     private String[] contentSlip;
+    private final static int UPDATE_TEXT =1;
+
+    private Handler handler=new Handler() {
+
+        public void handleMessage(Message msg){
+            switch (msg.what){
+                case UPDATE_TEXT:
+                    if(contentSlip.length>0){
+                        setView((int) (Math.random()*contentSlip.length-1),(int) (Math.random()*contentSlip.length-1),(int) (Math.random()*contentSlip.length-1),(int) (Math.random()*contentSlip.length-1),(int) (Math.random()*contentSlip.length-1),(int) (Math.random()*contentSlip.length-1),(int) (Math.random()*contentSlip.length-1),(int) (Math.random()*contentSlip.length-1),(int) (Math.random()*contentSlip.length-1),(int) (Math.random()*contentSlip.length-1));
+                    }else {
+                        Toast.makeText(getApplicationContext(), "please input data!!!",
+                                Toast.LENGTH_SHORT).show();
+                    }
+                    break;
+                default:
+                    break;
+            }
+        }
+    };
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,32 +58,33 @@ public class PractiseActivity extends AppCompatActivity implements SensorEventLi
         mSensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
     }
 
-    private void setView(int ran1,int ran2,int ran3,int ran4,int ran5,int ran6,int ran7,int ran8,int ran9,int ran10) {
+    private void setView(int ran1,int ran2,int ran3,int ran4,int ran5,int ran6,int ran7,int ran8,int ran9,int ran0) {
 
-        textView1.setText(contentSlip[ran1]);
-        textView2.setText(contentSlip[ran2]);
-        textView3.setText(contentSlip[ran3]);
-        textView4.setText(contentSlip[ran4]);
-        textView5.setText(contentSlip[ran5]);
-        textView6.setText(contentSlip[ran6]);
-        textView7.setText(contentSlip[ran7]);
-        textView8.setText(contentSlip[ran8]);
-        textView9.setText(contentSlip[ran9]);
-        textView10.setText(contentSlip[ran10]);
+        textView[0].setText(contentSlip[ran0]);
+        textView[1].setText(contentSlip[ran1]);
+        textView[2].setText(contentSlip[ran2]);
+        textView[3].setText(contentSlip[ran3]);
+        textView[4].setText(contentSlip[ran4]);
+        textView[5].setText(contentSlip[ran5]);
+        textView[6].setText(contentSlip[ran6]);
+        textView[7].setText(contentSlip[ran7]);
+        textView[8].setText(contentSlip[ran8]);
+        textView[9].setText(contentSlip[ran9]);
 
     }
 
     private void init() {
-        textView1= (TextView) findViewById(R.id.textView1);
-        textView1= (TextView) findViewById(R.id.textView2);
-        textView1= (TextView) findViewById(R.id.textView3);
-        textView1= (TextView) findViewById(R.id.textView4);
-        textView1= (TextView) findViewById(R.id.textView5);
-        textView1= (TextView) findViewById(R.id.textView6);
-        textView1= (TextView) findViewById(R.id.textView7);
-        textView1= (TextView) findViewById(R.id.textView8);
-        textView1= (TextView) findViewById(R.id.textView9);
-        textView1= (TextView) findViewById(R.id.textView10);
+        textView[0]= (TextView) findViewById(R.id.textView10);
+        textView[1]= (TextView) findViewById(R.id.textView1);
+        textView[2]= (TextView) findViewById(R.id.textView2);
+        textView[3]= (TextView) findViewById(R.id.textView3);
+        textView[4]= (TextView) findViewById(R.id.textView4);
+        textView[5]= (TextView) findViewById(R.id.textView5);
+        textView[6]= (TextView) findViewById(R.id.textView6);
+        textView[7]= (TextView) findViewById(R.id.textView7);
+        textView[8]= (TextView) findViewById(R.id.textView8);
+        textView[9]= (TextView) findViewById(R.id.textView9);
+
         contentSlip=read().split(" ");
     }
 
@@ -100,39 +116,9 @@ public class PractiseActivity extends AppCompatActivity implements SensorEventLi
         //values[0]:X轴，values[1]：Y轴，values[2]：Z轴
         float[] values = event.values;
         if (sensorType == Sensor.TYPE_ACCELEROMETER) {
-  /*因为一般正常情况下，任意轴数值最大就在9.8~10之间，只有在你突然摇动手机
-  *的时候，瞬时加速度才会突然增大或减少。
-  *所以，经过实际测试，只需监听任一轴的加速度大于14的时候，改变你需要的设置
-  *就OK了~~~
-  */
-            if (((Math.abs(values[0]) > 10 || Math.abs(values[1]) > 10 || Math.abs(values[2]) > 10)) ) {
-                System.out.println(Math.abs(values[0]));
-                System.out.println(Math.abs(values[1]));
-                System.out.println(Math.abs(values[2]));
-                System.out.println((int) (Math.random()*contentSlip.length-1));
-                int x1=(int) (Math.random()*contentSlip.length-1);
-//                int x2=(int) (Math.random()*contentSlip.length-1);
-//                int x3=(int) (Math.random()*contentSlip.length-1);
-//                int x4=(int) (Math.random()*contentSlip.length-1);
-//                int x5=(int) (Math.random()*contentSlip.length-1);
-//                int x6=(int) (Math.random()*contentSlip.length-1);
-//                int x7=(int) (Math.random()*contentSlip.length-1);
-//                int x8=(int) (Math.random()*contentSlip.length-1);
-//                int x9=(int) (Math.random()*contentSlip.length-1);
-//                int x10=(int) (Math.random()*contentSlip.length-1);
-                textView1.setText(contentSlip[x1]);
-//                textView2.setText(contentSlip[x2]);
-//                textView3.setText(contentSlip[x3]);
-//                textView4.setText(contentSlip[x4]);
-//                textView5.setText(contentSlip[x5]);
-//                textView6.setText(contentSlip[x6]);
-//                textView7.setText(contentSlip[x7]);
-//                textView8.setText(contentSlip[x8]);
-//                textView9.setText(contentSlip[x9]);
-//                textView10.setText(contentSlip[x10]);
 
-
-//                setView((int) (Math.random()*contentSlip.length-1),(int) (Math.random()*contentSlip.length-1),(int) (Math.random()*contentSlip.length-1),(int) (Math.random()*contentSlip.length-1),(int) (Math.random()*contentSlip.length-1),(int) (Math.random()*contentSlip.length-1),(int) (Math.random()*contentSlip.length-1),(int) (Math.random()*contentSlip.length-1),(int) (Math.random()*contentSlip.length-1),(int) (Math.random()*contentSlip.length-1));
+            if (((Math.abs(values[0]) > 15 || Math.abs(values[1]) > 15 || Math.abs(values[2]) > 15)) ) {
+                new MyThread().start();
             }
         }
 
@@ -170,6 +156,16 @@ public class PractiseActivity extends AppCompatActivity implements SensorEventLi
                 //根据不同应用，需要的反应速率不同，具体根据实际情况设定
                 SensorManager.SENSOR_DELAY_NORMAL);
 
+    }
+
+    class MyThread extends Thread
+    {
+        @Override
+        public void run() {
+            Message message = new Message();
+            message.what = UPDATE_TEXT;
+            handler.sendMessage(message);
+        }
     }
 
 }
