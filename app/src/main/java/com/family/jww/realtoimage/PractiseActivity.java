@@ -15,6 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -99,7 +100,8 @@ public class PractiseActivity extends AppCompatActivity implements SensorEventLi
     private String read() {
         String content = null;
         try {
-            FileInputStream inputStream = this.openFileInput(MainActivity.fileName);
+            File file=new File(MainActivity.fileName);
+            FileInputStream inputStream = new FileInputStream(file);
             byte[] bytes = new byte[1024];
             ByteArrayOutputStream arrayOutputStream = new ByteArrayOutputStream();
             while (inputStream.read(bytes) != -1) {

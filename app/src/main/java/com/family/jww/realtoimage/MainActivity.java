@@ -2,6 +2,7 @@ package com.family.jww.realtoimage;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -13,10 +14,14 @@ import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.Toast;
 
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.io.RandomAccessFile;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -24,7 +29,9 @@ public class MainActivity extends AppCompatActivity {
     private EditText editTextWord;
     private Button buttonSave;
     private Button buttonPractise;
-    public static final String fileName="resource.txt";
+    private ExternalSD externalSD;
+    private String folderName =ExternalSD.getSDPath() + "/" + "MyAPPFolder";
+    static String fileName =ExternalSD.getSDPath() + "/" + "MyAPPFolder" + "/" + "think.txt";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,8 +49,13 @@ public class MainActivity extends AppCompatActivity {
             Button view = (Button) v;
             switch (view.getId()){
                 case R.id.buttonSave:
-                    save();
-                    editTextWord.setText("");
+                    String inputWord = editTextWord.getText().toString();
+                    if (!inputWord.isEmpty()){
+                        externalSD.save(folderName,fileName,inputWord);
+                        editTextWord.setText("");
+                    } else{
+                        Toast.makeText(MainActivity.this,"please input word",Toast.LENGTH_SHORT).show();
+                    }
                     break;
                 case R.id.buttonPractise:
                     jump();
@@ -60,32 +72,16 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private void save() {
-        String content=editTextWord.getText().toString();
-        if(content.isEmpty()){
-            Toast.makeText(MainActivity.this,"input  not null",Toast.LENGTH_SHORT).show();
-            return;
-        }
-        content=content+" ";
 
-        try {
-            FileOutputStream outputStream = openFileOutput(fileName, Activity.MODE_APPEND);
-            outputStream.write(content.getBytes());
-            outputStream.flush();
-            outputStream.close();
-            Toast.makeText(MainActivity.this, "sucessful", Toast.LENGTH_SHORT).show();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-    }
 
     private void initialComponot() {
         spinner = (Spinner) findViewById(R.id.spinner);
         editTextWord = (EditText) findViewById(R.id.editTextWord);
         buttonSave = (Button) findViewById(R.id.buttonSave);
         buttonPractise = (Button) findViewById(R.id.buttonPractise);
+        externalSD = new ExternalSD();
+//        folderName = getSDPath() + "/" + "MyAPPFolder";
+//        fileName = getSDPath() + "/" + "MyAPPFolder"+ "/" + "think.txt";
     }
+
 }
